@@ -1,9 +1,421 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello World</title>
+  <meta charset="utf-8">
+  <!-- <meta name="description" -->
+        <!-- content="."> -->
+  <!-- <meta name="keywords" content="Nerfies, D-NeRF, NeRF"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LMA: Latent Motion Adjuster for Physics-based Multi-agent Interaction</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/LMGroup-KyotoU.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
 </head>
+
 <body>
-    <h1>Hello World</h1>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">LMA: Latent Motion Adjuster for Physics-based Multi-agent Interaction</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Anonymous Author</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">TMLR 2026</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- OpenReview Link. -->
+              <span class="link-block">
+                <a href="https://openreview.net/forum?id=OR5ClOTaWU"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/LMGroup-KyotoU/LMA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img source src="./static/images/concept.jpg">
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background-color: #f5f5f5;">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Learning interactive multi-agent behaviors from scratch is often sample-inefficient
+            and fails to exploit reusable skills learned in simpler settings.
+            While latent skill representations enable efficient single-agent reinforcement learning,
+            their extension to multi-agent interaction requires conditioning behaviors on other agents
+            without destroying pretrained structure. We formulate multi-agent interaction as a latent adaptation problem and propose
+            the Latent Motion Adjuster (LMA),
+            a lightweight conditional module that modifies latent actions produced by
+            a pretrained single-agent policy based on other agents’ states.
+            Rather than relearning policies from scratch,
+            our method performs structured residual adaptation in latent space,
+            enabling efficient skill reuse under both cooperative and competitive scenarios.
+            Experiments on physics-based control benchmarks demonstrate that
+            latent-space adaptation improves sample efficiency and interaction performance
+            over fine-tuning and strategic baselines.
+            These results suggest that conditional latent modulation
+            provides a principled mechanism for transferring single-agent skills
+            to multi-agent reinforcement learning.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method -->
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">LMA Structure</h2>
+          <p>
+            The training process of LMA consists of the following three stages.
+            <ol>
+                <li>Pre-training stage where the latent motion representation of the motion prior is acquired by imitating the motion clip dataset.</li>
+                <li>Task stage where the high-level policy is learned to control the latent motion of the motion prior according to the given task.</li>
+                <li>Multi-agent interaction stage where the latent motion adjuster is trained to adjust the latent motion output by the high-level policy according to the opponent's state.</li>
+            </ol>
+          </p>
+          <img src="./static/images/structure.jpg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Method -->
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Result -->
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Results</h2>
+          <h2 class="title is-3" id="cooperative" style="color:#f0a00c">Cooperative tasks</h2>
+          <p>
+            LMA achieved higher cooperative motions at a comparable or faster learning speed than conventional methods.
+          </p>
+          <!-- table tennis (cooperation) -->
+          <div class="content is-centered has-text-centered">
+            <h2 class="title is-4">
+              Table tennis
+            </h2>
+            Green: Agent / Orange: Opponent
+          </div>
+          <table style="
+                  width: 100%;
+                  border: 0px;
+                  border-spacing: 5px 0px;
+                  border-collapse: separate;
+                  margin-right: auto;
+                  margin-left: auto;
+                  padding-bottom: 20px;
+                ">
+
+            <tbody>
+              <tr class="block_videos">
+                <td style="width: 25%; text-align: center;">
+                  (i) PULSE <br> (from scratch)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/i.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (ii) PULSE <br> (fine tuning)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/ii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (iii) PULSE <br> (fine tuning w/ expansion)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/iii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (iv) PULSE + <br> residual RL (action)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/iv.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+              <tr class="block_videos">
+                <td style="width: 25%; text-align: center;">
+                  (v) PULSE + residual RL<br> (hidden-layer)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/v.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (vi) PULSE + <br> KL
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/vi.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  <b>(vii) PULSE + LMA <br> (ours w/ freeze)</b>
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/vii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  <b>(viii) PULSE + LMA <br> (ours w/o freeze)</b>
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/pp/viii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- table tennis (cooperation) -->
+          <!-- tennis (cooperation)-->
+          <div class="content is-centered has-text-centered">
+            <h2 class="title is-4">
+              Tennis
+            </h2>
+            Green: Agent / Orange: Opponent
+          </div>
+          <table style="
+                  width: 100%;
+                  border: 0px;
+                  border-spacing: 5px 0px;
+                  border-collapse: separate;
+                  margin-right: auto;
+                  margin-left: auto;
+                  padding-bottom: 20px;
+                ">
+
+            <tbody>
+              <tr class="block_videos">
+                <td style="width: 25%; text-align: center;">
+                  (i) PULSE <br> (from scratch)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/i.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (ii) PULSE <br> (fine tuning)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/ii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (iii) PULSE <br> (fine tuning w/ expansion)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/iii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (iv) PULSE + <br> residual RL (action)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/iv.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+              <tr class="block_videos">
+                <td style="width: 25%; text-align: center;">
+                  (v) PULSE + residual RL<br> (hidden-layer)
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/v.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  (vi) PULSE + <br> KL
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/vi.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  <b>(vii) PULSE + LMA <br> (ours w/ freeze)</b>
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/vii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td style="width: 25%; text-align: center;">
+                  <b>(viii) PULSE + LMA <br> (ours w/o freeze)</b>
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/tennis/viii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="columns is-centered">
+            <h2 class="title is-4" style="text-align:center" >
+              Comparison of learning performance in cooperative tasks.
+            </h2>
+          </div>
+          <div style="text-align: center">
+              <img source src="./static/images/graph.jpg" width="75%">
+          </div>
+          <!-- tennis (cooperation) -->
+          <h2 class="title is-3" id="cooperative" style="color:#f0a00c">Competitive tasks</h2>
+          <p>
+            Although LMA achieved higher competitive motions than conventional methods in table tennis task, no significant difference was observed in the tennis task.
+            This is because the policy learned during the single-agent stage did not achieve sufficient performance.
+            A future challenge is the development of a continual skill improvement framework.
+          </p>
+          <!-- table tennis (competition) -->
+          <div class="content is-centered has-text-centered">
+            <h2 class="title is-4">
+              Table tennis
+            </h2>
+            Green: (viii) PULSE + LMA (ours w/o freeze) (after 10,000 learning step) <br>
+            Orange: (vii) PULSE + LMA (ours w/ freeze) (after 10,000 learning step) <br>
+          </div>
+          <table style="
+            width: 60%;
+            border: 0px;
+            border-spacing: 5px 0px;
+            border-collapse: separate;
+            margin-right: auto;
+            margin-left: auto;
+            padding-bottom: 20px;
+            ">
+
+            <tbody>
+              <tr class="block_videos">
+                <td>
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/competition/pp_viii_vii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- table tennis (competition) -->
+          <!-- tennis (competition) -->
+          <div class="content is-centered has-text-centered">
+            <h2 class="title is-4">
+              Tennis
+            </h2>
+            Green: (viii) PULSE + LMA (ours w/o freeze) (after 10,000 learning step) <br>
+            Orange: (vii) PULSE + LMA (ours w/ freeze) (after 10,000 learning step) <br>
+          </div>
+          <table style="
+            width: 60%;
+            border: 0px;
+            border-spacing: 5px 0px;
+            border-collapse: separate;
+            margin-right: auto;
+            margin-left: auto;
+            padding-bottom: 20px;
+            ">
+            <tbody>
+              <tr class="block_videos">
+                <td>
+                  <video width="100%" height="auto" muted="" autoplay="" loop="" controls="">
+                    <source src="static/videos/competition/tennis_viii_vii.mp4" type="video/mp4 ">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="columns is-centered">
+            <h2 class="title is-4" style="text-align:center" >
+              <a href="https://uscf1-nyc1.aodhosting.com/CL-AND-CR-ALL/CL-ALL/1967/1967_08.pdf#page=26">Elo score</a> of each method in competitive tasks.
+            </h2>
+          </div>
+          <div style="text-align: center">
+              <img source src="./static/images/elo.jpg" width="75%">
+          </div>
+          <!-- tennis (competition) -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Results -->
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            We use the website template provided by <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
